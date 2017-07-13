@@ -1,0 +1,74 @@
+<main>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                <article>
+                    <header>
+                        <h2 th:text="${article.title}"></h2>
+                    </header>
+
+                    <p class="text-justify" th:text="${article.content}"></p>
+
+                    <div class="form-group">
+                        &nbsp;
+                    </div>
+
+                    <div class="row">
+                        <div class="cold-md-12">
+                            <div class="cold-md-4 pull-left" th:each="image:${article.photos}">
+                                <h3></h3>
+                                <a id="${image.id}" class="info custom-image-size"
+                                   th:href="@{'data:image/jpeg;base64,'+${image.photo}}"
+                                   data-lightbox="roadtrip">
+                                    <img class="info custom-image-size"
+                                         th:src="@{'data:image/jpeg;base64,'+${image.photo}}"
+                                         data-lightbox="roadtrip"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        &nbsp;
+                    </div>
+
+                    <div class="text-left"
+                         th:text="${article.date} + '  '+${article.town.name}+' by ' + ${article.author.fullName}"></div>
+
+
+                    <p th:if="${article.tags.isEmpty() == false}">
+                        <a class="btn btn-default btn-xs"
+                           th:each="tag:${article.tags}"
+                           th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}"></a>
+                    </p>
+
+
+                    <footer>
+                        <form class="form-horizontal" th:action="@{/article/pendingArticleEdit/{id}(id=${article.id})}" method="post"
+                              enctype="multipart/form-data">
+                            <div class="pull-right">
+                                <th:block sec:authorize="isAuthenticated()"
+                                          th:if="${user.isAdmin()}">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label" for="statusType">Status</label>
+                                        <div class="col-md-12">
+                                            <select class="form-control" id="statusType" name="statusType">
+                                                <option th:each="status : ${statuses}" th:value="${status}"
+                                                        th:text="${status}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-md-offset-7">
+                                            <input type="submit" class="btn btn-primary" value="Submit"/>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </form>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </div>
+</main>

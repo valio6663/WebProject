@@ -1,0 +1,16 @@
+<main xmlns="http://www.w3.org/1999/html">
+    <div class="container body-container">
+        <div class="row">
+            <div id="main" class="col-sm-9">
+                <div>
+                    <span th:text="${user.email}"></span>
+                    <br/>
+                    <span th:text="${user.fullName}"></span>
+                </div>
+
+                <img th:attr="src=@{${image}}"/>
+
+            </div>
+        </div>
+    </div>
+</main>
